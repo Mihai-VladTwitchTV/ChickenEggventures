@@ -11,7 +11,17 @@ import java.util.List;
 public class TileManager {
     public GamePanel gamePanel;
     List<Tile> tiles = new ArrayList<>();
-    int tileCount;
+    int tileCount = 24;
+
+    int mapSize = 5; ///5x5 map
+
+    int map[] = {2,2,2,2,2,
+                 2,0,0,0,0,
+                 2,0,0,0,2,
+                 2,2,2,2,2,
+                 1,1,1,1,1
+
+    };
 
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -32,7 +42,10 @@ public class TileManager {
     }
 
     public void draw(Graphics2D g2){
-        g2.drawImage(tiles.get(1).sprite,0,0,gamePanel.TILESIZE,gamePanel.TILESIZE,null);
+        for(int i=0;i<map.length;i++)
+            g2.drawImage(tiles.get(map[i]).sprite,(i%mapSize)*gamePanel.TILESIZE,(int)(i/mapSize)*gamePanel.TILESIZE,gamePanel.TILESIZE,gamePanel.TILESIZE,null);
+
+            ///g2.drawImage(tiles.get(i).sprite,i*gamePanel.TILESIZE,i*gamePanel.TILESIZE,gamePanel.TILESIZE,gamePanel.TILESIZE,null);
     }
 
     public void populate(){
