@@ -22,3 +22,7 @@ public class Main {
         }
 
 }
+
+
+
+///Special thanks to https://www.youtube.com/@RyiSnow
