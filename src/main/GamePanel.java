@@ -47,6 +47,29 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread = new Thread(this);
         gameThread.start();
     }
+
+
+    public void waitTime(double waitTimeMili){
+        if(waitTimeMili < 0)
+            waitTimeMili = 0;
+
+        try {
+            Thread.sleep((long) waitTimeMili);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    public void passTime(double waitTimeMili){
+        double newTime = System.nanoTime()+waitTimeMili*1000000;
+        while(System.nanoTime() < newTime){
+            //do nothing
+        }
+
+    }
+
     @Override
     public void run() {
         double drawInterval = BILLION/FPS; //one frame every 0.016666 seconds
@@ -61,14 +84,15 @@ public class GamePanel extends JPanel implements Runnable {
 
             double remainingTime =newTime - System.nanoTime();
 
-            if(remainingTime < 0)
-                remainingTime = 0;
-
-            try {
-                Thread.sleep((long) remainingTime/1000000);//nanosec to millisec conv
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+//            if(remainingTime < 0)
+//                remainingTime = 0;
+//
+//            try {
+//                Thread.sleep((long) remainingTime/1000000);//nanosec to millisec conv
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+            waitTime(remainingTime/1000000);//nanosec to millisec conv
 
             newTime += drawInterval;
         }

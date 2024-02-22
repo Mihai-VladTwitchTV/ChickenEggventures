@@ -5,11 +5,12 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean wPressed,aPressed,sPressed,dPressed;
+    public boolean wPressed,aPressed,sPressed,dPressed,spacePressed;
 
     @Override
     public void keyTyped(KeyEvent e) {
         ///do nothing
+
     }
 
     @Override
@@ -26,6 +27,9 @@ public class KeyHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_D){
             dPressed = true;
+        }
+        if (e.getKeyCode()==KeyEvent.VK_SPACE){
+            spacePressed= true;
         }
     }
 
@@ -44,6 +48,8 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_D){
             dPressed = false;
         }
+        if(code == KeyEvent.VK_SPACE)
+            spacePressed = false;
 
     }
 }

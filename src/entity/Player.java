@@ -13,6 +13,18 @@ public class Player extends Entity{
     GamePanel gamePanel;
     KeyHandler keyHandler;
 
+    boolean dashing = false;
+
+    public int dashingSpeed;
+    public int speedCopy;
+
+    public double dashedCooldownMilli = 100;
+    public double dashedCooldownRemaining=0;
+    public double dashTimeMilli=8;
+    public double dashTimeRemaining=dashTimeMilli;
+
+    public boolean justDashed=false;
+
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
@@ -21,11 +33,14 @@ public class Player extends Entity{
         getPlayerSprite();
     }
 
+
     public void setDefaults(){
         coordX=100;
         coordY=100;
         speed=4;
         direction="right";
+        speedCopy = speed;
+        dashingSpeed = speed * 3;
     }
 
     public void getPlayerSprite(){
@@ -46,34 +61,14 @@ public class Player extends Entity{
     }
 
     public void update(){
-        if (keyHandler.wPressed == true){
-            isMoving=true;
-            direction="up";
-            coordY = coordY - speed;
 
-        } else if (keyHandler.sPressed == true){
-            isMoving=true;
-            direction="down";
-            coordY = coordY + speed;
-
-        }
-        if(keyHandler.aPressed == true){
-            isMoving=true;
-            direction="left";
-            coordX = coordX - speed;
-
-        }else if (keyHandler.dPressed == true){
-            isMoving=true;
-            direction="right";
-            coordX = coordX + speed;
-
-        } else if (keyHandler.wPressed == false &&
-                   keyHandler.aPressed == false &&
-                   keyHandler.sPressed == false &&
-                   keyHandler.dPressed == false)
-            isMoving=false;
-
+        movementCheck();
         animateSprite();
+        dashCheck();
+
+
+
+
 
 
     }
@@ -82,7 +77,7 @@ public class Player extends Entity{
         if(!isMoving)
             return;
         spriteCounter++;
-        if(spriteCounter > 20) {///toggle sprite every 30 frames
+        if(spriteCounter > 20) {///toggle sprite every 20 frames
             firstAnim = !firstAnim;
             spriteCounter = 0;
         }
@@ -90,8 +85,6 @@ public class Player extends Entity{
 
     public void draw(Graphics2D graphics2D){
 
-//        graphics2D.setColor(Color.yellow);
-//        graphics2D.fillRect(coordX,coordY,gamePanel.TILESIZE,gamePanel.TILESIZE);
         BufferedImage buffIm = null;
 
         switch(direction){
@@ -126,5 +119,79 @@ public class Player extends Entity{
 
         graphics2D.drawImage(buffIm,coordX,coordY,gamePanel.TILESIZE,gamePanel.TILESIZE,null);
 
+    }
+
+    public void movementCheck(){
+        if (keyHandler.wPressed == true){
+            isMoving=true;
+            direction="up";
+            coordY = coordY - speed;
+
+        } else if (keyHandler.sPressed == true){
+            isMoving=true;
+            direction="down";
+            coordY = coordY + speed;
+
+        }
+        if(keyHandler.aPressed == true){
+            isMoving=true;
+            direction="left";
+            coordX = coordX - speed;
+
+        }else if (keyHandler.dPressed == true){
+            isMoving=true;
+            direction="right";
+            coordX = coordX + speed;
+
+        } else if (keyHandler.wPressed == false &&
+                keyHandler.aPressed == false &&
+                keyHandler.sPressed == false &&
+                keyHandler.dPressed == false)
+            isMoving=false;
+    }
+
+    public void dashCheck() {
+
+        if (dashedCooldownRemaining > 0) {
+            dashedCooldownRemaining--;
+            return;
+        }
+
+
+        if (keyHandler.spacePressed && dashTimeRemaining >= 0)
+            dashing = true;
+
+        if (dashing) {
+            speed = dashingSpeed;
+
+//            switch (direction) {
+//                case "up":
+//                    coordY -= speed * 2;
+//                    break;
+//                case "down":
+//                    coordY += speed * 2;
+//                    break;
+//                case "right":
+//                    coordX += speed * 2;
+//                    break;
+//                case "left":
+//                    coordX -= speed * 2;
+//                    break;
+//                default:
+//                    coordX += speed;
+//
+//
+//            }
+
+            dashTimeRemaining--;
+
+            if (dashTimeRemaining <= 0) {
+                dashing = false;
+                speed = speedCopy;
+                dashedCooldownRemaining = dashedCooldownMilli;
+                dashTimeRemaining = dashTimeMilli;
+                justDashed = false;
+            }
+        }
     }
 }
