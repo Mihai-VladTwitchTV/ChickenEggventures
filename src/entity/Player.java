@@ -125,12 +125,17 @@ public class Player extends Entity{
         if (keyHandler.wPressed == true){
             isMoving=true;
             direction="up";
+
             coordY = coordY - speed;
+            if( coordY<=0)
+                coordY=0;
 
         } else if (keyHandler.sPressed == true){
             isMoving=true;
             direction="down";
             coordY = coordY + speed;
+            if( coordY>=gamePanel.SCREENHEIGHT-gamePanel.TILESIZE)
+                coordY=gamePanel.SCREENHEIGHT-gamePanel.TILESIZE;
 
         }
         if(keyHandler.aPressed == true){

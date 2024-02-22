@@ -19,8 +19,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     final int MAXSCREENCOL = 16;
     final int MAXSCREENROW = 12;
-    final int SCREENWIDTH = TILESIZE * MAXSCREENCOL;//768 PIXELS
-    final int SCREENHEIGHT = TILESIZE * MAXSCREENROW;//576 PIXELS
+    public final int SCREENWIDTH = TILESIZE * MAXSCREENCOL;//768 PIXELS
+    public final int SCREENHEIGHT = TILESIZE * MAXSCREENROW;//576 PIXELS
 
     Thread gameThread;
     KeyHandler keyHandler = new KeyHandler();
@@ -110,6 +110,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D graphics2D = (Graphics2D)graphics;
         tileManager.draw(graphics2D);
         player.draw(graphics2D);
+        graphics2D.drawString(player.dashedCooldownRemaining+"/"+player.dashedCooldownMilli,500,25);
 
         graphics2D.dispose();
 
