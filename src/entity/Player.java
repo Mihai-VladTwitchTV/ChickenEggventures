@@ -143,6 +143,7 @@ public class Player extends Entity{
             direction="left";
             coordX = coordX - speed;
 
+
         }else if (keyHandler.dPressed == true){
             isMoving=true;
             direction="right";
