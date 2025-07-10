@@ -15,21 +15,10 @@ public class TileManager {
 
     int mapSize = 16; ///5x5 map
 
-    int map[] = {2,2,2,2,2,2,2,2,0,0,0,0,0,0,1,0,
-                 2,0,0,0,0,0,0,2,0,0,0,0,0,1,1,0,
-                 2,0,0,0,0,0,0,2,0,0,0,0,0,1,0,0,
-                 2,0,0,0,0,0,0,2,0,0,0,0,0,1,0,0,
-                 2,0,0,0,0,0,0,2,0,0,0,0,1,1,0,0,
-                 2,2,2,0,0,2,2,2,0,0,0,0,1,0,0,0,
-                 0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,
-                 0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,
-                 0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,
-                 0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,
-                 0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,
-                 0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1
 
 
-    };
+
+    private int[][] map = ChunkLoader.generateChunk(new int[]{1}).getMapMatrix();
 
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -50,10 +39,12 @@ public class TileManager {
     }
 
     public void draw(Graphics2D g2){
-        for(int i=0;i<map.length;i++)
-            g2.drawImage(tiles.get(map[i]).sprite,(i%mapSize)*gamePanel.TILESIZE,(int)(i/mapSize)*gamePanel.TILESIZE,gamePanel.TILESIZE,gamePanel.TILESIZE,null);
 
-            ///g2.drawImage(tiles.get(i).sprite,i*gamePanel.TILESIZE,i*gamePanel.TILESIZE,gamePanel.TILESIZE,gamePanel.TILESIZE,null);
+        for(int i=0;i<mapSize;i++)
+            for(int j=0;j<mapSize;j++){
+                g2.drawImage(tiles.get(map[i][j]).sprite,j*gamePanel.TILESIZE,i*gamePanel.TILESIZE,gamePanel.TILESIZE,gamePanel.TILESIZE,null);
+            }
+
     }
 
     public void populate(){
