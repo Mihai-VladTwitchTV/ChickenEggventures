@@ -10,6 +10,8 @@ import java.util.List;
 
 public class TileManager {
     public GamePanel gamePanel;
+
+    public ChunkLoader loader;
     List<Tile> tiles = new ArrayList<>();
     int tileCount = 24;
 
@@ -17,14 +19,14 @@ public class TileManager {
 
 
 
+    public TileManager(GamePanel gamePanel) throws IOException {
 
-    private int[][] map = ChunkLoader.generateChunk(new int[]{1}).getMapMatrix();
-
-    public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         tileCount=10;
         populate();
         getTileSprite();
+
+        this.loader = new ChunkLoader();
     }
 
     public void getTileSprite(){
@@ -38,7 +40,13 @@ public class TileManager {
 
     }
 
+    public void setMap(){
+        //this.map = ChunkLoader.generateChunk(new int[]{1}).getMapMatrix();
+    }
+
     public void draw(Graphics2D g2){
+
+        int[][] map = loader.getCurrentChunk().getMapMatrix();
 
         for(int i=0;i<mapSize;i++)
             for(int j=0;j<mapSize;j++){
