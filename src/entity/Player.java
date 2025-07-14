@@ -210,16 +210,16 @@ public class Player extends Entity{
     public void handleEdge(String direction){
         switch(direction){
             case "up":
-                coordY=gamePanel.SCREENHEIGHT-gamePanel.TILESIZE;
+                coordY=gamePanel.SCREENHEIGHT-24;
                 break;
             case "down":
-                coordY=gamePanel.TILESIZE;
+                coordY=-24;
                 break;
             case "left":
-                coordX=gamePanel.SCREENWIDTH-gamePanel.TILESIZE;
+                coordX=gamePanel.SCREENWIDTH-24;
                 break;
             case "right":
-                coordX=gamePanel.TILESIZE;
+                coordX=24;
                 break;
 
             default:;
