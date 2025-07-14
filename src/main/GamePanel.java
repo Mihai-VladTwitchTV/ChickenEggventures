@@ -21,7 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
     private final int MAXSCREENCOL = 16;
     private final int MAXSCREENROW = 16;
     public final int SCREENWIDTH = TILESIZE * MAXSCREENCOL;//768 PIXELS
-    public final int SCREENHEIGHT = TILESIZE * MAXSCREENROW;//576 PIXELS
+    public final int SCREENHEIGHT = TILESIZE * MAXSCREENROW;//768 PIXELS
 
     Thread gameThread;
     KeyHandler keyHandler = new KeyHandler();
@@ -116,5 +116,10 @@ public class GamePanel extends JPanel implements Runnable {
 
         graphics2D.dispose();
 
+    }
+
+
+    public void requestNewChunk(String direction){
+        tileManager.requestNewChunk(direction);
     }
 }

@@ -40,9 +40,10 @@ public class TileManager {
 
     }
 
-    public void setMap(){
-        //this.map = ChunkLoader.generateChunk(new int[]{1}).getMapMatrix();
+    public void requestNewChunk(String direction){
+        loader.loadNewChunk(direction);
     }
+
 
     public void draw(Graphics2D g2){
 
