@@ -5,6 +5,7 @@ import tiles.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class GamePanel extends JPanel implements Runnable {
     public final int ORIGINALTILESIZE = 16;
@@ -20,7 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
     private final int MAXSCREENCOL = 16;
     private final int MAXSCREENROW = 16;
     public final int SCREENWIDTH = TILESIZE * MAXSCREENCOL;//768 PIXELS
-    public final int SCREENHEIGHT = TILESIZE * MAXSCREENROW;//576 PIXELS
+    public final int SCREENHEIGHT = TILESIZE * MAXSCREENROW;//768 PIXELS
 
     Thread gameThread;
     KeyHandler keyHandler = new KeyHandler();
@@ -35,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 
 
-    public GamePanel(){
+    public GamePanel() throws IOException {
         this.setPreferredSize(new Dimension(SCREENWIDTH,SCREENHEIGHT));
         this.setBackground(Color.GREEN);
         this.setDoubleBuffered(true);
@@ -109,10 +110,16 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D graphics2D = (Graphics2D)graphics;
         tileManager.draw(graphics2D);
+        //System.out.println("Called");
         player.draw(graphics2D);
         graphics2D.drawString(player.dashedCooldownRemaining+"/"+player.dashedCooldownMilli,500,25);
 
         graphics2D.dispose();
 
+    }
+
+
+    public void requestNewChunk(String direction){
+        tileManager.requestNewChunk(direction);
     }
 }

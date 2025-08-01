@@ -127,31 +127,33 @@ public class Player extends Entity{
             direction="up";
 
             coordY = coordY - speed;
-            if( coordY<=0)
-                coordY=0;
+            if( coordY<= -gamePanel.TILESIZE) {//load higher chunk
+                //coordY=0;
+            handleEdge(direction);
+            }
 
         } else if (keyHandler.sPressed == true){
             isMoving=true;
             direction="down";
             coordY = coordY + speed;
-            if( coordY>=gamePanel.SCREENHEIGHT-gamePanel.TILESIZE)
-                coordY=gamePanel.SCREENHEIGHT-gamePanel.TILESIZE;
+            if( coordY>=gamePanel.SCREENHEIGHT)//load lower chunk
+                handleEdge(direction);
 
         }
         if(keyHandler.aPressed == true){
             isMoving=true;
             direction="left";
             coordX = coordX - speed;
-            if(coordX<=0)
-                coordX=0;
+            if(coordX<=-gamePanel.TILESIZE)//load left chunk
+                handleEdge(direction);
 
 
         }else if (keyHandler.dPressed == true){
             isMoving=true;
             direction="right";
             coordX = coordX + speed;
-            if(coordX>=gamePanel.SCREENWIDTH-gamePanel.TILESIZE)
-                coordX=gamePanel.SCREENWIDTH-gamePanel.TILESIZE;
+            if(coordX>=gamePanel.SCREENWIDTH)//load right chunk
+                handleEdge(direction);
 
         } else if (keyHandler.wPressed == false &&
                 keyHandler.aPressed == false &&
@@ -203,5 +205,25 @@ public class Player extends Entity{
                 justDashed = false;
             }
         }
+    }
+
+    public void handleEdge(String direction){
+        switch(direction){
+            case "up":
+                coordY=gamePanel.SCREENHEIGHT-24;
+                break;
+            case "down":
+                coordY=-24;
+                break;
+            case "left":
+                coordX=gamePanel.SCREENWIDTH-24;
+                break;
+            case "right":
+                coordX=24;
+                break;
+
+            default:;
+        }
+        gamePanel.requestNewChunk(direction);
     }
 }
